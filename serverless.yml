@@ -7,7 +7,7 @@ provider:
   name: aws
   runtime: nodejs20.x
   memorySize: 256
-  region: 'us-east-1'
+  region: "us-east-1"
   deploymentMethod: direct
   versionFunctions: false
   stage: ${opt:stage, 'dev'}
@@ -21,4 +21,14 @@ functions:
           path: /hello
       - http:
           method: ANY
-          path: '{proxy+}'
+          path: "{proxy+}"
+
+resources:
+  Resources:
+    UsersTable: ${file(src/users/resources/muzic-users-table.yml):UsersTable}
+
+custom:
+  UsersTable:
+    name: !Ref UsersTable
+    arn: !GetAtt UsersTable.Arn
+    # arn: arn:aws:dynamodb:${self:provider.region}:*:table/MuzicUsersTable-${self:provider.stage}
