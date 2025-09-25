@@ -1,8 +1,25 @@
 import { NestFactory } from '@nestjs/core';
+import serverlessExpress from '@codegenie/serverless-express';
+import { Callback, Context, Handler } from 'aws-lambda';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+let server: Handler | undefined;
+
+async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  await app.init();
+
+  const expressApp = app
+    .getHttpAdapter()
+    .getInstance() as import('express').Express;
+  return serverlessExpress({ app: expressApp });
 }
-bootstrap();
+
+export const handler: Handler = async (
+  event: any,
+  context: Context,
+  callback: Callback,
+): Promise<any> => {
+  server = server ?? (await bootstrap());
+  return server(event, context, callback);
+};
