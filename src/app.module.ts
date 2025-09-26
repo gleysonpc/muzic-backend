@@ -4,11 +4,12 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { DynamooseModule } from 'nestjs-dynamoose';
 import { ConfigModule } from '@nestjs/config';
+import { dynamoLocalConfig } from './utils/dynamodb-local-config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    DynamooseModule.forRoot(),
+    ConfigModule.forRoot(),
+    DynamooseModule.forRoot(dynamoLocalConfig),
     UsersModule,
   ],
   controllers: [AppController],

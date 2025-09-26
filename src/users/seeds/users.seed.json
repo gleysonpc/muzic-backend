@@ -1,0 +1,12 @@
+[
+    {
+        "id": "887e2a5a-ae0b-4be0-b4f3-8e5fe3a3f96f",
+        "email": "john-doe@muzic.com",
+        "name": "John Doe"
+    },
+    {
+        "id": "f424f640-ab41-4481-a6fc-893adf0cc3ab",
+        "name": "Jane Doe",
+        "email": "jane-doe@muzic.com"
+    }
+]
