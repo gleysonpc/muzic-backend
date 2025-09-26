@@ -8,9 +8,10 @@ provider:
   runtime: nodejs20.x
   memorySize: 256
   region: "us-east-1"
-  deploymentMethod: direct
   versionFunctions: false
   stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+    - ${file(src/users/resources/muzic-users-table-iam.yml):UsersTableIAM}
 
 functions:
   main:
@@ -22,6 +23,10 @@ functions:
       - http:
           method: ANY
           path: "{proxy+}"
+    environment:
+      MUZIC_USERS_TABLE: MuzicUsersTable-${opt:stage, 'dev'}      
+    dependsOn:
+      - UsersTable
 
 resources:
   Resources:
@@ -31,4 +36,3 @@ custom:
   UsersTable:
     name: !Ref UsersTable
     arn: !GetAtt UsersTable.Arn
-    # arn: arn:aws:dynamodb:${self:provider.region}:*:table/MuzicUsersTable-${self:provider.stage}
