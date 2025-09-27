@@ -3,6 +3,8 @@ import { DynamooseModule } from 'nestjs-dynamoose';
 import { UsersController } from './users.controller';
 import { UserSchema } from './user.schema';
 import { UserService } from './user.service';
+import { UserRepository } from './user.repository';
+import { UserDynamoDBRepository } from './user.dynamodb.repository';
 
 @Module({
   imports: [
@@ -18,7 +20,10 @@ import { UserService } from './user.service';
       },
     ]),
   ],
-  providers: [UserService],
+  providers: [
+    { provide: UserRepository, useClass: UserDynamoDBRepository },
+    UserService,
+  ],
   controllers: [UsersController],
 })
 export class UsersModule {}

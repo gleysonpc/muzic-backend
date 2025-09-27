@@ -20,7 +20,7 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
-      const user = await this.usersService.findOne({ id });
+      const user = await this.usersService.findOneById({ id });
       return user;
     } catch (error) {
       console.error('Error finding user:', error);

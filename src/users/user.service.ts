@@ -1,57 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel, type Model } from 'nestjs-dynamoose';
 import { User, UserKey } from './user.interface';
-import * as crypto from 'crypto';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel('User')
-    private userModel: Model<User, UserKey>,
-  ) {}
-
-  private generateUUID(): string {
-    return crypto.randomUUID();
-  }
+  constructor(private readonly usersRepository: UserRepository<User>) {}
 
   async create(user: Omit<User, 'id'>) {
-    try {
-      const newUser = { id: this.generateUUID(), ...user };
-      const result = await this.userModel.create(newUser);
-      return result;
-    } catch (error) {
-      console.error('Error creating user', error);
-      throw error;
-    }
+    return this.usersRepository.create(user);
   }
 
   async update(key: UserKey, user: Partial<User>) {
-    try {
-      const result = await this.userModel.update(key, user);
-      return result;
-    } catch (error) {
-      console.error('Error updating user', error);
-      throw error;
-    }
+    return this.usersRepository.update(key, user);
   }
 
-  async findOne(key: UserKey) {
-    try {
-      const result = await this.userModel.get(key);
-      return result;
-    } catch (error) {
-      console.error('Error finding user', error);
-      throw error;
-    }
+  async findOneById(key: UserKey) {
+    return this.usersRepository.findOne(key);
   }
 
   async findAll() {
-    try {
-      const result = await this.userModel.scan().exec();
-      return result;
-    } catch (error) {
-      console.error('Error scanning users', error);
-      throw error;
-    }
+    return this.usersRepository.findAll();
   }
 }

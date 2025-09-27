@@ -25,16 +25,12 @@ Content-Type: application/json
 ###################################### Pages ######################################
 ###################################################################################
 
+### Page by Slug
 GET {{baseUrl}}/pages/slug/perry
 Accept: application/json
 
 ### Page by ID
-GET {{baseUrl}}/pages/f424f640-ab41-4481-a6fc-893adf0cc3ab
-Accept: application/json
-
-
-### Page by Slug
-GET {{baseUrl}}/pages/lady-gaga
+GET {{baseUrl}}/pages/3d2dbdea-19dd-494d-99d8-82c820127537
 Accept: application/json
 
 #### Create Page

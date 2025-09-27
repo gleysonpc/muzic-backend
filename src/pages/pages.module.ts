@@ -3,6 +3,8 @@ import { PagesController } from './pages.controller';
 import { DynamooseModule } from 'nestjs-dynamoose';
 import { PageSchema } from './page.schema';
 import { PageService } from './page.service';
+import { PageRepository } from './page.repository';
+import { PageDynamoDBRepository } from './page.dynamodb.repository';
 
 @Module({
   imports: [
@@ -18,7 +20,13 @@ import { PageService } from './page.service';
       },
     ]),
   ],
-  providers: [PageService],
+  providers: [
+    {
+      provide: PageRepository,
+      useClass: PageDynamoDBRepository,
+    },
+    PageService,
+  ],
   controllers: [PagesController],
 })
 export class PagesModule {}
