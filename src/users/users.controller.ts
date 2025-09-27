@@ -10,7 +10,6 @@ export class UsersController {
   async findAll() {
     try {
       const users = await this.usersService.findAll();
-      console.log('Found users:', users);
       return users;
     } catch (error) {
       console.error('Error finding users:', error);
@@ -22,7 +21,6 @@ export class UsersController {
   async findOne(@Param('id') id: string) {
     try {
       const user = await this.usersService.findOne({ id });
-      console.log('Found user:', user);
       return user;
     } catch (error) {
       console.error('Error finding user:', error);
@@ -33,9 +31,7 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      console.log('Creating user:', createUserDto);
       const user = await this.usersService.create(createUserDto);
-      console.log('Created user:', user);
       return user;
     } catch (error) {
       console.error('Error creating user:', error);

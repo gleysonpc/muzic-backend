@@ -18,6 +18,7 @@ provider:
     DYNAMO_ENDPOINT: ${env:DYNAMO_ENDPOINT}
   iamRoleStatements:
     - ${file(src/users/resources/muzic-users-table-iam.yml):UsersTableIAM}
+    - ${file(src/pages/resources/muzic-pages-table-iam.yml):PagesTableIAM}
 
 functions:
   main:
@@ -31,17 +32,22 @@ functions:
           path: "{proxy+}"
     environment:
       MUZIC_USERS_TABLE: MuzicUsersTable-${opt:stage, 'dev'}
+      MUZIC_PAGES_TABLE: MuzicPagesTable-${opt:stage, 'dev'}
     dependsOn:
       - UsersTable
 
 resources:
   Resources:
     UsersTable: ${file(src/users/resources/muzic-users-table.yml):UsersTable}
+    PagesTable: ${file(src/pages/resources/muzic-pages-table.yml):PagesTable}
 
 custom:
   UsersTable:
     name: !Ref UsersTable
     arn: !GetAtt UsersTable.Arn
+  PagesTable:
+    name: !Ref PagesTable
+    arn: !GetAtt PagesTable.Arn
 
   dynamodb:
     stages:

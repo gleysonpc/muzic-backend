@@ -1,0 +1,48 @@
+
+@baseUrl = http://localhost:3000/offline
+
+###################################################################################
+####################################### Users #####################################
+###################################################################################
+
+GET {{baseUrl}}/users
+Accept: application/json
+
+
+### User by ID
+GET {{baseUrl}}/users/f424f640-ab41-4481-a6fc-893adf0cc3ab
+Accept: application/json
+
+### Create User
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Kate Perry",
+  "email": "kate-perry@muzic.com"
+}
+###################################################################################
+###################################### Pages ######################################
+###################################################################################
+
+GET {{baseUrl}}/pages/slug/perry
+Accept: application/json
+
+### Page by ID
+GET {{baseUrl}}/pages/f424f640-ab41-4481-a6fc-893adf0cc3ab
+Accept: application/json
+
+
+### Page by Slug
+GET {{baseUrl}}/pages/lady-gaga
+Accept: application/json
+
+#### Create Page
+POST {{baseUrl}}/pages
+Content-Type: application/json
+
+{
+  "slug": "perry",
+  "userId": "001b8846-274e-4aa0-9906-f5efc9f83764",
+  "name": "Kate Perry"
+}
