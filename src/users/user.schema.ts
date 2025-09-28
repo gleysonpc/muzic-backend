@@ -10,5 +10,9 @@ export const UserSchema = new Schema({
   },
   email: {
     type: String,
+    index: [{ name: 'userByEmail', type: 'global' }],
+  },
+  password: {
+    type: String,
   },
 });

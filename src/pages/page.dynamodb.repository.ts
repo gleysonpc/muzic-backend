@@ -1,8 +1,10 @@
 import { Page, PageKey } from './page.interface';
 import { PageRepository } from './page.repository';
 import { InjectModel, type Model } from 'nestjs-dynamoose';
+import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
 
+@Injectable()
 export class PageDynamoDBRepository implements PageRepository<Page> {
   constructor(
     @InjectModel('Page')

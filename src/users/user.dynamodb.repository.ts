@@ -36,6 +36,24 @@ export class UserDynamoDBRepository implements UserRepository<User> {
     }
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    try {
+      // Use a query against the GSI `userByEmail` instead of a scan.
+      // Querying the index provides a KeyConditionExpression and is efficient.
+      const result = await this.userModel
+        .query({
+          email: { eq: email },
+        })
+        .using('userByEmail')
+        .exec();
+
+      return result && result.length > 0 ? result[0] : null;
+    } catch (error) {
+      console.error('Error finding user by email', error);
+      throw error;
+    }
+  }
+
   async findOne(key: UserKey): Promise<User | null> {
     try {
       const result = await this.userModel.get(key);

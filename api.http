@@ -1,13 +1,48 @@
+@devHost = http://localhost:3000/offline
+@cloudHost = https://cofd8bq5n1.execute-api.us-east-1.amazonaws.com/dev
+@host = {{devHost}}
+@baseUrl = {{host}}
 
-@baseUrl = http://localhost:3000/offline
+# @token = {{loginAPI.response.body.token}}
+@token = {{login.response.body.access_token}}
+
+
+###################################################################################
+####################################### Auth ######################################
+###################################################################################
+
+### Sign In
+# @name login
+POST {{baseUrl}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "john-snow@muzic.com",
+  "password": "password123"
+}
+
+### Sign Up
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "name": "John Snow",
+  "email": "john-snow@muzic.com",
+  "password": "password123"
+}
 
 ###################################################################################
 ####################################### Users #####################################
 ###################################################################################
 
+### All Users
 GET {{baseUrl}}/users
 Accept: application/json
 
+### Get Me
+GET {{baseUrl}}/users/me
+Accept: application/json
+Authorization: Bearer {{token}}
 
 ### User by ID
 GET {{baseUrl}}/users/f424f640-ab41-4481-a6fc-893adf0cc3ab

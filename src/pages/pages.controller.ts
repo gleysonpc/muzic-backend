@@ -6,9 +6,11 @@ import {
   Post,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { PageService } from './page.service';
 import { CreatePageDto } from './dto/create-page.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('pages')
 export class PagesController {
@@ -46,6 +48,7 @@ export class PagesController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPageDto: CreatePageDto) {
