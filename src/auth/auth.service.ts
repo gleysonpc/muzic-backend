@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -29,7 +29,7 @@ export class AuthService {
   async validateUser(username: string, password: string) {
     const foundUser = await this.userRepository.findByEmail(username);
     if (!foundUser) {
-      throw new ForbiddenException('Incorrect Credentials!');
+      throw new UnauthorizedException('Incorrect Credentials!');
     }
 
     if (!foundUser.password) {
@@ -38,12 +38,12 @@ export class AuthService {
         'User found but password is undefined for user id:',
         foundUser.id,
       );
-      throw new ForbiddenException('Incorrect Credentials!');
+      throw new UnauthorizedException('Incorrect Credentials!');
     }
 
     const passwordMatches = bcrypt.compareSync(password, foundUser.password);
     if (!passwordMatches) {
-      throw new ForbiddenException('Incorrect Credentials!');
+      throw new UnauthorizedException('Incorrect Credentials!');
     }
 
     const payload: JwtPayload = {

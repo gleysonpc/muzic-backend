@@ -10,6 +10,7 @@ let server: Handler | undefined;
 
 async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({ origin: '*' });
   app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
     .setTitle('Muzic API')

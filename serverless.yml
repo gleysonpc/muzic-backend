@@ -26,8 +26,9 @@ functions:
     events:
       - http:
           method: ANY
-          path: /hello
+          path: /info
       - http:
+          cors: true
           method: ANY
           path: "{proxy+}"
     environment:
