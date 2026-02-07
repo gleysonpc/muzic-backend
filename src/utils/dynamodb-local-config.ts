@@ -1,4 +1,5 @@
-const isLocal = process.env.STAGE === 'offline';
+const isLocal =
+  process.env.SST_DEV === 'true' || process.env.STAGE === 'offline';
 
 console.log('Running in local mode:', isLocal);
 export const dynamoLocalConfig = isLocal

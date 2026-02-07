@@ -1,6 +1,6 @@
 @devHost = http://localhost:3000/offline
-@cloudHost = https://cofd8bq5n1.execute-api.us-east-1.amazonaws.com/dev
-@host = {{devHost}}
+@cloudHost = https://hlemchbk41.execute-api.us-east-1.amazonaws.com/dev
+@host = {{cloudHost}}
 @baseUrl = {{host}}
 
 # @token = {{loginAPI.response.body.token}}
