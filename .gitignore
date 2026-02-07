@@ -4,6 +4,7 @@
 /build
 .serverless
 .esbuild
+.sst
 .env
 
 
